@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from 'apollo-boost';
+
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
-import { amber, green, grey, lightGreen, cyan, teal } from '@material-ui/core/colors';
+import { amber, grey } from '@material-ui/core/colors';
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+import Routes from './routes';
+
+const client = new ApolloClient({
+  uri: 'http://api.spacex.land/graphql'
+})
 
 const Root: React.FC = () => {
   const [theme, setTheme] = useState({
@@ -30,9 +39,13 @@ const Root: React.FC = () => {
 
   const muiTheme = createMuiTheme(theme as ThemeOptions);
   return (
-    <MuiThemeProvider theme={muiTheme}>
-      <App changeTheme={toggleTheme} />
-    </MuiThemeProvider>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <MuiThemeProvider theme={muiTheme}>
+          <Routes changeTheme={toggleTheme} />
+        </MuiThemeProvider>
+      </BrowserRouter>
+    </ApolloProvider>
   );
 };
 

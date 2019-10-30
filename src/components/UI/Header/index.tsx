@@ -29,8 +29,8 @@ const Header: React.FC<IProps> = (props) => {
             <img className={classes.img} src={checked ? logo: blackLogo} alt="" />
           </div>
           <div style={{ marginLeft: 'auto' }}>
-            <Button color='secondary'>Rockets</Button>
             <Button color='secondary'>Sheeps</Button>
+            <Button color='secondary'>Rockets</Button>
             <Switch onChange={changeCheck} value={checked} />
           </div>
         </Toolbar>
