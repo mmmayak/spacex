@@ -1,21 +1,38 @@
 import React, { FunctionComponent } from 'react'
 import { Ship } from '..';
-import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from '@material-ui/core';
+import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Theme, createStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import noImage from '../../../assets/images/no-image.png';
 
-const ShipItem: FunctionComponent<Ship> = ({ name, image }) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    item: {
+      width: '100%'
+    },
+    name: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }))
+
+const ShipItem: FunctionComponent<Ship> = ({ name, image, size }) => {
+  const classes = useStyles();
+
   return (
-    <Grid item xs>
+    <Grid item sm={size} className={classes.item}>
       <Card>
         <CardActionArea>
           <CardMedia
             component="img"
-            height="100"
-            image={image} />
+            height="140"
+            image={image ? image : noImage} />
           <CardContent>
             <Typography
               gutterBottom
               variant="h5"
-              component="h2">
+              component="h2"
+              className={classes.name}>
               {name}
             </Typography>
           </CardContent>

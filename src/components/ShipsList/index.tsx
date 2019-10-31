@@ -5,18 +5,19 @@ export interface Ship {
   id: string | number;
   name: string;
   image: string;
-  key?: string | number;
+  size: 4 | 8;
 }
 
 interface IProps {
   ships: Ship[];
+  size: 4 | 8;
 }
 
-const ShipsList: FunctionComponent<IProps> = ({ ships }) => {
+const ShipsList: FunctionComponent<IProps> = ({ ships, size }) => {
   return (
     <>
       {ships.map(ship => (
-        <ShipItem {...ship} />
+        <ShipItem {...ship} key={ship.id} size={size} />
       ))}
     </>
   )
