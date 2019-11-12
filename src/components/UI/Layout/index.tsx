@@ -8,12 +8,18 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     black: {
-      padding: '20px 0',
-      background: '#000'
+      background: '#000',
+      minHeight: 'calc(100vh - 64px)',
+      [theme.breakpoints.down('xs')]: {
+        minHeight: 'calc(100vh - 56px)'
+      }
     },
     white: {
-      padding: '20px 0',
-      background: '#fff'
+      background: '#fff',
+      minHeight: 'calc(100vh - 64px)',
+      [theme.breakpoints.down('xs')]: {
+        minHeight: 'calc(100vh - 56px)'
+      }
     }
   }))
 

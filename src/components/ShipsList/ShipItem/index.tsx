@@ -3,6 +3,7 @@ import { Ship } from '..';
 import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Theme, createStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import noImage from '../../../assets/images/no-image.png';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }))
 
-const ShipItem: FunctionComponent<Ship> = ({ name, image, size }) => {
+const ShipItem: FunctionComponent<Ship> = ({ id, name, image, size }) => {
   const classes = useStyles();
 
   return (
@@ -38,7 +39,7 @@ const ShipItem: FunctionComponent<Ship> = ({ name, image, size }) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="secondary">
+          <Button component={Link} to={`/ships/${id}`} size="small" color="secondary">
             Learn More
           </Button>
         </CardActions>
