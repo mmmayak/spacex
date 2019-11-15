@@ -7,6 +7,7 @@ import { makeStyles, createStyles } from '@material-ui/styles';
 import ShipsList from '../../components/ShipsList';
 import { ViewHeadline, ViewModule } from '@material-ui/icons';
 import FetchHelper from '../../utils/helpers/FetchHelper';
+import Layout from '../../components/UI/Layout';
 
 interface IDirection {
   direction: 'row' | 'column';
@@ -53,34 +54,36 @@ const ShipsContainer: FunctionComponent = () => {
     }
   }
   return (
-    <div className={classes.root}>
-      <FetchHelper
-        loading={loading}
-        error={!!error}>
-        <Grid
-          container
-          direction="row"
-          className={classes.button}>
-          {direction.direction === 'row' ?
-            <IconButton size='medium' onClick={changeDirection} color='secondary' style={{ marginLeft: 'auto' }}>
-              <ViewHeadline />
-            </IconButton>
-            :
-            <IconButton size='medium' onClick={changeDirection} color='secondary' style={{ marginLeft: 'auto' }}>
-              <ViewModule />
-            </IconButton>
-          }
-        </Grid>
-        <Grid
-          container
-          direction={direction.direction}
-          spacing={3}
-          alignItems={direction.size === 4 ? 'flex-start' : 'center'}
-          className={classes.container}>
-          {data && <ShipsList ships={data.ships} size={direction.size} />}
-        </Grid>
-      </FetchHelper>
-    </div>
+    <Layout>
+      <div className={classes.root}>
+        <FetchHelper
+          loading={loading}
+          error={!!error}>
+          <Grid
+            container
+            direction="row"
+            className={classes.button}>
+            {direction.direction === 'row' ?
+              <IconButton size='medium' onClick={changeDirection} color='secondary' style={{ marginLeft: 'auto' }}>
+                <ViewHeadline />
+              </IconButton>
+              :
+              <IconButton size='medium' onClick={changeDirection} color='secondary' style={{ marginLeft: 'auto' }}>
+                <ViewModule />
+              </IconButton>
+            }
+          </Grid>
+          <Grid
+            container
+            direction={direction.direction}
+            spacing={3}
+            alignItems={direction.size === 4 ? 'flex-start' : 'center'}
+            className={classes.container}>
+            {data && <ShipsList ships={data.ships} size={direction.size} />}
+          </Grid>
+        </FetchHelper>
+      </div>
+    </Layout>
   )
 }
 

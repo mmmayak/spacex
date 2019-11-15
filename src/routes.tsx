@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import { Route, Switch } from 'react-router';
 import Header from './components/UI/Header';
 import ShipsContainer from './containers/ShipsContainer';
-import Layout from './components/UI/Layout';
+import ThemeLayout from './components/UI/ThemeLayout';
 import MainContainer from './containers/MainContainer';
 import ShipItemContainer from './containers/ShipItemContainer';
 
@@ -24,10 +24,10 @@ const Routes: FunctionComponent<IProps> = ({ changeTheme }) => {
       <Header checked={checked} changeCheck={changeCheck} />
       <Switch>
         <Route path='/' exact component={MainContainer} />
-        <Route path='/ships/:id' exact component={ShipItemContainer} />
-        <Layout checked={checked}>
+        <ThemeLayout checked={checked}>
+          <Route path='/ships/:id' exact component={ShipItemContainer} />
           <Route path='/ships' exact component={ShipsContainer} />
-        </Layout>
+        </ThemeLayout>
       </Switch>
     </>
   )

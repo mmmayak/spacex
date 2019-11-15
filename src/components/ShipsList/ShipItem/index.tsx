@@ -37,6 +37,7 @@ const ShipItem: FunctionComponent<Ship> = ({ id, name, image, size }) => {
               {name}
             </Typography>
           </CardContent>
+         
         </CardActionArea>
         <CardActions>
           <Button component={Link} to={`/ships/${id}`} size="small" color="secondary">

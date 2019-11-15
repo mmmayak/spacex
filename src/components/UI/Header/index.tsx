@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Button, Switch } from '@material-ui/core';
 import blackLogo from '../../../assets/images/black-logo.png';
 import logo from '../../../assets/images/logo.png';
 import { Link } from 'react-router-dom';
+import Layout from '../Layout';
 
 interface IProps {
   checked: boolean;
@@ -25,28 +26,30 @@ const Header: FunctionComponent<IProps> = (props) => {
   return (
     <div className={classes.root}>
       <AppBar position='static' color='primary'>
-        <Toolbar>
-          <Link
-            to="/"
-            className={classes.imgCont}>
-            <img className={classes.img} src={checked ? logo : blackLogo} alt="rocket logo" />
-          </Link>
-          <div style={{ marginLeft: 'auto' }}>
-            <Button
-              to="/ships"
-              component={Link}
-              color='secondary'>
-              Ships
+        <Layout>
+          <Toolbar>
+            <Link
+              to="/"
+              className={classes.imgCont}>
+              <img className={classes.img} src={checked ? logo : blackLogo} alt="rocket logo" />
+            </Link>
+            <div style={{ marginLeft: 'auto' }}>
+              <Button
+                to="/ships"
+                component={Link}
+                color='secondary'>
+                Ships
               </Button>
-            <Button
-              color='secondary'
-              to="/rockets"
-              component={Link}>
-              Rockets
+              <Button
+                color='secondary'
+                to="/rockets"
+                component={Link}>
+                Rockets
               </Button>
-            <Switch onChange={changeCheck} value={checked} />
-          </div>
-        </Toolbar>
+              <Switch onChange={changeCheck} value={checked} />
+            </div>
+          </Toolbar>
+        </Layout>
       </AppBar>
     </div>
   )

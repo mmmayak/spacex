@@ -1,35 +1,11 @@
 import React, { FunctionComponent } from 'react'
-import { makeStyles, createStyles, Theme } from '@material-ui/core';
 
-interface Props {
-  checked: boolean;
-}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    black: {
-      background: '#000',
-      minHeight: 'calc(100vh - 64px)',
-      [theme.breakpoints.down('xs')]: {
-        minHeight: 'calc(100vh - 56px)'
-      }
-    },
-    white: {
-      background: '#fff',
-      minHeight: 'calc(100vh - 64px)',
-      [theme.breakpoints.down('xs')]: {
-        minHeight: 'calc(100vh - 56px)'
-      }
-    }
-  }))
-
-const Layout: FunctionComponent<Props> = (props: any) => {
-  const classes = useStyles();
+const Layout: FunctionComponent = (props) => {
   return (
-    <div className={props.checked ? classes.black : classes.white}>
+    <div style={{ maxWidth: '1140px', margin: '0 auto', width: '100%' }}>
       {props.children}
     </div>
   )
 }
 
-export default Layout;
+export default Layout
