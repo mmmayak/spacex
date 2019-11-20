@@ -1,4 +1,17 @@
-.title-animation {
+.title-animation.light {
+  background: linear-gradient(to right, #000000 10%, #ffc107 50%, #000000 60%);
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #ffc107;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 3s linear infinite;
+  display: inline-block;
+}
+
+.title-animation.dark {
   background: linear-gradient(to right, #ffffff 10%, #ffc107 50%, #ffffff 60%);
   background-size: auto auto;
   background-clip: border-box;
@@ -11,8 +24,39 @@
   display: inline-block;
 }
 
+.title-animation-sub.light {
+  width: 80%;
+  height: 3px;
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #000000, #ffc107, #000000);
+  background-size: 200% auto;
+  animation: gradient 3s linear infinite;
+  animation-direction: normal;
+}
+
+.title-animation-sub.dark {
+  width: 80%;
+  height: 3px;
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #ffffff, #ffc107, #ffffff);
+  background-size: 200% auto;
+  animation: gradient 3s linear infinite;
+  animation-direction: normal;
+}
+
+@keyframes gradient {
+  to {
+    background-position: 200% center;
+  }
+}
 @keyframes textclip {
-	to {
-		background-position: 200% center;
-	}
+  to {
+    background-position: 200% center;
+  }
 }

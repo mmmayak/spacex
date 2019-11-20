@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Typography, makeStyles, createStyles, Theme } from '@material-ui/core';
-
+import classNames from 'classnames';
 
 interface IProps {
   variant: 'h1'
@@ -19,6 +19,7 @@ interface IProps {
   | 'srOnly'
   | 'inherit';
   component?: any;
+  className?: any;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,13 +29,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }))
 
-const Text: FunctionComponent<IProps> = ({ component, variant, children }) => {
+const Text: FunctionComponent<IProps> = ({ component, variant, children, className }) => {
   const classes = useStyles();
   return (
     <Typography
       variant={variant}
       component={component}
-      className={classes.root}>
+      className={classNames(classes.root, className)}>
       {children}
     </Typography>
   )
