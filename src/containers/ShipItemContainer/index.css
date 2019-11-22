@@ -1,9 +1,7 @@
 .title-animation.light {
   background: linear-gradient(to right, #000000 10%, #ffc107 50%, #000000 60%);
-  background-size: auto auto;
   background-clip: border-box;
   background-size: 200% auto;
-  color: #ffc107;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -13,10 +11,8 @@
 
 .title-animation.dark {
   background: linear-gradient(to right, #ffffff 10%, #ffc107 50%, #ffffff 60%);
-  background-size: auto auto;
   background-clip: border-box;
   background-size: 200% auto;
-  color: #ffc107;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -25,7 +21,7 @@
 }
 
 .title-animation-sub.light {
-  width: 80%;
+  width: 60%;
   height: 3px;
   position: absolute;
   bottom: -20px;
@@ -38,7 +34,7 @@
 }
 
 .title-animation-sub.dark {
-  width: 80%;
+  width: 60%;
   height: 3px;
   position: absolute;
   bottom: -20px;

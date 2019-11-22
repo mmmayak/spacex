@@ -2,18 +2,20 @@ import React, { FunctionComponent } from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { useParams } from 'react-router';
-import { Grid, Theme, Typography, createStyles, ExpansionPanel, ExpansionPanelSummary, useTheme } from '@material-ui/core';
+import { Grid, Theme, Typography, createStyles, useTheme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import Text from '../../components/UI/StyledComponents/Typography';
 import classNames from 'classnames';
 
 import './index.css';
+
+import Text from '../../components/UI/StyledComponents/Typography';
 import Layout from '../../components/UI/Layout';
 import FetchHelper from '../../utils/helpers/FetchHelper';
 import checkForUndefined from '../../utils/helpers/checkForUndefined';
+import noImage from '../../assets/images/no-image.png';
 
 
-const GET_SHIP = gql`
+export const GET_SHIP = gql`
     query Ship($id: ID!) {
       ship(id: $id){
       name
@@ -22,6 +24,9 @@ const GET_SHIP = gql`
       type
       year_built
       active
+      weight_kg
+      status
+      home_port
     }
   }
 `;
@@ -31,6 +36,9 @@ const useStyles = makeStyles((theme: Theme) =>
     imgContainer: {
       height: '450px',
       position: 'relative',
+      WebkitBoxShadow: theme.palette.type === 'dark' ? '-1px 4px 8px 0px rgba(255,255,255,1)' : '-1px 4px 8px 0px rgba(0,0,0,0.75)',
+      MozBoxShadow: theme.palette.type === 'dark' ? '-1px 4px 8px 0px rgba(255,255,255,1)' : '-1px 4px 8px 0px rgba(0,0,0,0.75)',
+      boxShadow: theme.palette.type === 'dark' ? '-1px 4px 8px 0px rgba(255,255,255,1)' : '-1px 4px 8px 0px rgba(0,0,0,0.75)',
       [theme.breakpoints.down('xs')]: {
         height: '350px'
       }
@@ -46,6 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       textTransform: 'uppercase',
       position: 'relative',
+      [theme.breakpoints.down('xs')]: {
+        fontSize: '28px'
+      }
     },
     overlay: {
       position: 'absolute',
@@ -56,24 +67,25 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'rgba(0, 0, 0, 0.5)'
     },
     container: {
-      paddingTop: 20,
+      padding: '20px 0',
       [theme.breakpoints.down('xs')]: {
         paddingTop: 0
       }
     },
     content: {
       textAlign: 'center',
+      padding: '0 15px',
       [theme.breakpoints.down('xs')]: {
         width: '100%',
         marginTop: 20
       }
     },
     textTitle: {
-      marginRight: '5px'
+      marginRight: '5px',
+      textTransform: 'capitalize'
     },
     description: {
-      marginTop: 30,
-      padding: '0 15px'
+      marginTop: 30
     },
     textCont: {
       textAlign: "left",
@@ -84,6 +96,23 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     }
   }))
+
+
+const renderItem = (data: any, classes: any) => {
+  const items = Object.keys(data).map(key =>
+    <div className={classes.textCont} key={key} style={{ marginBottom: '10px' }}>
+      <Text
+        className={classes.textTitle}
+        variant="h6">
+        {key}:
+    </Text>
+      <Text
+        variant="inherit">
+        {checkForUndefined(data[key])}
+      </Text>
+    </div>);
+  return items;
+}
 
 const ShipItemContainer: FunctionComponent = () => {
   const classes = useStyles();
@@ -100,7 +129,7 @@ const ShipItemContainer: FunctionComponent = () => {
         <Grid container className={classes.container}>
           <Grid item sm={6} style={{ width: '100%' }}>
             <div className={classes.imgContainer}>
-              <img className={classes.img} src={data && data.ship.image} alt="" />
+              <img className={classes.img} src={data && data.ship.image ? data.ship.image : noImage} alt="" />
             </div>
           </Grid>
           <Grid item sm={6} className={classes.content}>
@@ -109,57 +138,22 @@ const ShipItemContainer: FunctionComponent = () => {
                 'dark': theme.palette.type === 'dark',
                 'light': theme.palette.type === 'light'
               })}
-              variant="h3">{data && data.ship.name}
+              variant="h4">{data && data.ship.name}
               <span className={classNames('title-animation-sub', {
                 'dark': theme.palette.type === 'dark',
                 'light': theme.palette.type === 'light'
               })}></span>
             </Typography>
             <Grid container direction="column" className={classes.description}>
-              <div className={classes.textCont}>
-                <Text
-                  className={classes.textTitle}
-                  variant="h6">
-                  Model:
-            </Text>
-                <Text
-                  variant="inherit">
-                  {data && checkForUndefined(data.ship.model)}
-                </Text>
-              </div>
-              <div className={classes.textCont}>
-                <Text
-                  className={classes.textTitle}
-                  variant="h6">
-                  Type:
-            </Text>
-                <Text
-                  variant="inherit">
-                  {data && data.ship.type}
-                </Text>
-              </div>
-              <div className={classes.textCont}>
-                <Text
-                  className={classes.textTitle}
-                  variant="h6">
-                  Built year:
-            </Text>
-                <Text
-                  variant="inherit">
-                  {data && data.ship.year_built} year
-            </Text>
-              </div>
-              <div className={classes.textCont}>
-                <Text
-                  className={classes.textTitle}
-                  variant="h6">
-                  Active:
-            </Text>
-                <Text
-                  variant="inherit">
-                  {data && data.ship.active}
-                </Text>
-              </div>
+              {data && renderItem({
+                model: data.ship.model,
+                type: data.ship.type,
+                year_built: data.ship.year_built,
+                weight_kg: data.ship.weight_kg,
+                active: data.ship.active,
+                status: data.ship.status,
+                home_port: data.ship.home_port
+              }, classes)}
             </Grid>
           </Grid>
         </Grid>
