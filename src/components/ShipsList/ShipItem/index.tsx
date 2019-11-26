@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }))
 
-const ShipItem: FunctionComponent<Ship> = ({ id, name, image, size }) => {
+const ShipItem: FunctionComponent<Ship> = ({ id, name, image, size, type, year_built, model, status }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -55,12 +55,15 @@ const ShipItem: FunctionComponent<Ship> = ({ id, name, image, size }) => {
           </CardContent>
 
         </CardActionArea>
-    {/*     <PopoverItemData
-          id={id}
+        <PopoverItemData
+          type={type}
+          model={model}
+          status={status}
+          year_built={year_built}
           open={open}
           handleClose={handleClose}
           classes={classes}
-          anchorEl={anchorEl} /> */}
+          anchorEl={anchorEl} />
         <CardActions>
           <Button component={Link} to={`/ships/${id}`} size="small" color="secondary">
             Learn More

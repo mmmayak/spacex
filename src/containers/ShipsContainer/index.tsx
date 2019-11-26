@@ -20,6 +20,10 @@ const SHIPS = gql`
         id
         name
         image
+        model
+        type
+        status
+        year_built
       }
     }
   `;

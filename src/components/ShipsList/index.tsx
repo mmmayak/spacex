@@ -6,6 +6,10 @@ export interface Ship {
   name: string;
   image: string;
   size: 4 | 8;
+  type: string;
+  model: string;
+  status: string;
+  year_built: string;
 }
 
 interface IProps {

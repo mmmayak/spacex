@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }))
 
 
-const renderItem = (data: any, classes: any) => {
+export const renderItem = (data: any, classes: any) => {
   const items = Object.keys(data).map(key =>
     <div className={classes.textCont} key={key} style={{ marginBottom: '10px' }}>
       <Text

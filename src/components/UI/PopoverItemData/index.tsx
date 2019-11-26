@@ -1,21 +1,22 @@
 import React, { FunctionComponent } from 'react'
 import { Popover, Paper } from '@material-ui/core'
 import { useQuery } from '@apollo/react-hooks'
-import { GET_SHIP } from '../../../containers/ShipItemContainer'
+import { GET_SHIP, renderItem } from '../../../containers/ShipItemContainer'
 import FetchHelper from '../../../utils/helpers/FetchHelper'
+import checkForUndefined from '../../../utils/helpers/checkForUndefined'
 
 type IPopoverItemData = {
-  id: string | number;
+  year_built: string;
+  status: string;
+  model: string;
+  type: string;
   open: boolean;
-  handleClose: () => void;
   anchorEl: HTMLButtonElement | null;
+  handleClose: () => void;
   classes: any;
 }
 
-const PopoverItemData: FunctionComponent<IPopoverItemData> = ({ id, open, anchorEl, handleClose, classes }) => {
-  const { loading, error, data } = useQuery(GET_SHIP, {
-    variables: { id }
-  })
+const PopoverItemData: FunctionComponent<IPopoverItemData> = ({ year_built, status, model, type, open, anchorEl, handleClose, classes }) => {
 
   return (
     <Popover
@@ -32,18 +33,12 @@ const PopoverItemData: FunctionComponent<IPopoverItemData> = ({ id, open, anchor
       }}
     >
       <Paper className={classes.paper}>
-        <FetchHelper
-          loading={loading}
-          error={!!error}>
-          {data
-            &&
-            <>
-              <p>{data.ship.model}</p>
-              <p>{data.ship.type}</p>
-              <p>{data.ship.year_built}</p>
-              <p>{data.ship.weight_kg}</p>
-            </>}
-        </FetchHelper>
+        {renderItem({
+          model,
+          type,
+          year_built,
+          active: status
+        }, '')}
       </Paper>
     </Popover>
   )

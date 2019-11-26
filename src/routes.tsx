@@ -5,6 +5,7 @@ import ShipsContainer from './containers/ShipsContainer';
 import ThemeLayout from './components/UI/ThemeLayout';
 import MainContainer from './containers/MainContainer';
 import ShipItemContainer from './containers/ShipItemContainer';
+import RocketsContainer from './containers/RocketsContainer';
 
 interface IProps {
   changeTheme: () => void;
@@ -25,6 +26,7 @@ const Routes: FunctionComponent<IProps> = ({ changeTheme }) => {
       <Switch>
         <Route path='/' exact component={MainContainer} />
         <ThemeLayout checked={checked}>
+          <Route path='/rockets' exact component={RocketsContainer} />
           <Route path='/ships/:id' exact component={ShipItemContainer} />
           <Route path='/ships' exact component={ShipsContainer} />
         </ThemeLayout>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
@@ -16,14 +16,19 @@ const client = new ApolloClient({
 })
 
 const Root: React.FC = () => {
+  const [type, setType] = useState('light');
+
+  useEffect(() => {
+    setType(localStorage.getItem('theme') || 'light')
+  }, []);
+
   const [theme, setTheme] = useState({
     palette: {
-      type: 'light',
-      primary: { main: amber[500], light: amber[400], dark: amber[600] },
-      secondary: grey
+      type,
+      primary: type === 'light' ? { main: amber[500], light: amber[400], dark: amber[600] } : { main: grey[800], dark: grey[900], light: grey[700] },
+      secondary: type === 'light' ? grey : amber
     },
   });
-
   const toggleTheme = () => {
     let paletteType = theme.palette.type === 'light' ? 'dark' : 'light';
     let primaryPalette = theme.palette.primary.main === amber[500] ? { main: grey[800], dark: grey[900], light: grey[700] } : { main: amber[500], light: amber[400], dark: amber[600] };
@@ -35,9 +40,11 @@ const Root: React.FC = () => {
         secondary: secondaryPalette
       }
     });
+    localStorage.setItem('theme', paletteType);
   };
 
   const muiTheme = createMuiTheme(theme as ThemeOptions);
+
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
