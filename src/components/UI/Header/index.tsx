@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 const Header: FunctionComponent<IProps> = (props) => {
   const classes = useStyles();
   const { checked, changeCheck } = props;
+  
   return (
     <div className={classes.root}>
       <AppBar position='static' color='primary'>
@@ -46,7 +47,7 @@ const Header: FunctionComponent<IProps> = (props) => {
                 component={Link}>
                 Rockets
               </Button>
-              <Switch onChange={changeCheck} value={checked} />
+              <Switch onChange={changeCheck} checked={checked} />
             </div>
           </Toolbar>
         </Layout>

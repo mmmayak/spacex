@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import { Route, Switch } from 'react-router';
 import Header from './components/UI/Header';
 import ShipsContainer from './containers/ShipsContainer';
@@ -8,16 +8,24 @@ import ShipItemContainer from './containers/ShipItemContainer';
 import RocketsContainer from './containers/RocketsContainer';
 
 interface IProps {
-  changeTheme: () => void;
+  toggleTheme: () => void;
 }
 
 
-const Routes: FunctionComponent<IProps> = ({ changeTheme }) => {
+const Routes: FunctionComponent<IProps> = ({ toggleTheme }) => {
   const [checked, setChecked] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('theme') && localStorage.getItem('theme') === 'dark') {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, [])
 
   const changeCheck = (): void => {
     setChecked(!checked);
-    changeTheme();
+    toggleTheme();
   };
 
   return (

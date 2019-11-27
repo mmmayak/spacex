@@ -15,24 +15,38 @@ const client = new ApolloClient({
   uri: 'http://api.spacex.land/graphql'
 })
 
-const Root: React.FC = () => {
-  const [type, setType] = useState('light');
+const lightPalette = {
+  main: amber[500],
+  light: amber[400],
+  dark: amber[600]
+};
 
-  useEffect(() => {
-    setType(localStorage.getItem('theme') || 'light')
-  }, []);
+const darkPalette = {
+  main: grey[800],
+  dark: grey[900],
+  light: grey[700]
+}
+
+const Root: React.FC = () => {
+  const [type, setType] = useState<string>(localStorage.getItem('theme') || 'light');
 
   const [theme, setTheme] = useState({
     palette: {
       type,
-      primary: type === 'light' ? { main: amber[500], light: amber[400], dark: amber[600] } : { main: grey[800], dark: grey[900], light: grey[700] },
+      primary: type === 'light' ? lightPalette : darkPalette,
       secondary: type === 'light' ? grey : amber
-    },
+    }
   });
+
   const toggleTheme = () => {
     let paletteType = theme.palette.type === 'light' ? 'dark' : 'light';
-    let primaryPalette = theme.palette.primary.main === amber[500] ? { main: grey[800], dark: grey[900], light: grey[700] } : { main: amber[500], light: amber[400], dark: amber[600] };
+    let primaryPalette = theme.palette.primary.main === amber[500] ? darkPalette : lightPalette;
     let secondaryPalette = theme.palette.secondary === amber ? grey : amber;
+
+    setType(paletteType);
+
+    localStorage.setItem('theme', paletteType);
+
     setTheme({
       palette: {
         type: paletteType,
@@ -40,7 +54,6 @@ const Root: React.FC = () => {
         secondary: secondaryPalette
       }
     });
-    localStorage.setItem('theme', paletteType);
   };
 
   const muiTheme = createMuiTheme(theme as ThemeOptions);
@@ -49,7 +62,7 @@ const Root: React.FC = () => {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <MuiThemeProvider theme={muiTheme}>
-          <Routes changeTheme={toggleTheme} />
+          <Routes toggleTheme={toggleTheme} />
         </MuiThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
